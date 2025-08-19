@@ -25,6 +25,7 @@ body {
     )
     rgb(var(--background-start-rgb));
   min-height: 100vh;
+  text-emphasis-color: black;
 }
 
 /* Custom scrollbar */

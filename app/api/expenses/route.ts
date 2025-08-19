@@ -29,8 +29,9 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(expenses)
   } catch (error) {
     console.error('Error fetching expenses:', error)
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
     return NextResponse.json(
-      { error: 'Failed to fetch expenses', details: error.message },
+      { error: 'Failed to fetch expenses', details: errorMessage },
       { status: 500 }
     )
   }
@@ -81,8 +82,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(expense, { status: 201 })
   } catch (error) {
     console.error('Error creating expense:', error)
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
     return NextResponse.json(
-      { error: 'Failed to create expense', details: error.message },
+      { error: 'Failed to create expense', details: errorMessage },
       { status: 500 }
     )
   }
@@ -107,8 +109,9 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json({ message: 'Expense deleted successfully' })
   } catch (error) {
     console.error('Error deleting expense:', error)
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
     return NextResponse.json(
-      { error: 'Failed to delete expense', details: error.message },
+      { error: 'Failed to delete expense', details: errorMessage },
       { status: 500 }
     )
   }

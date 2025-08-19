@@ -20,8 +20,9 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(categories)
   } catch (error) {
     console.error('Error fetching categories:', error)
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
     return NextResponse.json(
-      { error: 'Failed to fetch categories', details: error.message },
+      { error: 'Failed to fetch categories', details: errorMessage },
       { status: 500 }
     )
   }
@@ -62,8 +63,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(category, { status: 201 })
   } catch (error) {
     console.error('Error creating category:', error)
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
     
-    if (error.message.includes('Unique constraint')) {
+    if (errorMessage.includes('Unique constraint')) {
       return NextResponse.json(
         { error: 'Category with this name already exists' },
         { status: 409 }
@@ -71,7 +73,7 @@ export async function POST(request: NextRequest) {
     }
     
     return NextResponse.json(
-      { error: 'Failed to create category', details: error.message },
+      { error: 'Failed to create category', details: errorMessage },
       { status: 500 }
     )
   }
