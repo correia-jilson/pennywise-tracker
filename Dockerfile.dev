@@ -1,0 +1,24 @@
+# Development Dockerfile for PennyWise Tracker
+FROM node:18-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Install dependencies for better caching
+COPY package*.json ./
+RUN npm install --legacy-peer-deps
+
+# Copy prisma schema first for generation
+COPY prisma ./prisma/
+
+# Generate Prisma client
+RUN npx prisma generate
+
+# Copy source code
+COPY . .
+
+# Expose port
+EXPOSE 3000
+
+# Start development server
+CMD ["npm", "run", "dev"]
